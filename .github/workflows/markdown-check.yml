@@ -20,3 +20,24 @@ jobs:
             echo "README.md is missing ❌"
             exit 1
           fi
+
+  deploy:
+      needs: validate-markdown  # Only runs if validate-markdown succeeds
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+  
+        - name: Install Pandoc
+          run: sudo apt-get install pandoc
+  
+        - name: Convert Markdown to HTML
+          run: |
+            mkdir public
+            pandoc README.md -o public/index.html
+  
+        - name: Deploy to GitHub Pages
+          uses: peaceiris/actions-gh-pages@v3
+          with:
+            github_token: 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
+            publish_dir: ./public
