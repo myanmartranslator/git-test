@@ -22,29 +22,26 @@ jobs:
           fi
 
   deploy:
-      needs: validate-markdown  # Only runs if validate-markdown succeeds
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
-  
-        - name: Install Pandoc
-          run: sudo apt-get install pandoc
-  
-        - name: Convert Markdown to HTML
-          run: |
-            mkdir public
-            pandoc README.md -o public/index.html
-        
-        - name: Deploy to GitHub Pages
-          uses: peaceiris/actions-gh-pages@v3
-          with:
-            personal_token: ${{ secrets.dtoken }}   # Ensure this matches your secret's name exactly
-            publish_dir: ./public
-            publish_branch: gh-pages
-            allow_empty_commit: false
-            keep_files: false
-            force_orphan: false
-            enable_jekyll: false
-            disable_nojekyll: false
-            exclude_assets: .github
+    needs: validate-markdown
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+
+      - name: Convert Markdown to HTML
+        run: |
+          mkdir public
+          pandoc README.md -o public/index.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.dtoken }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          enable_jekyll: false
