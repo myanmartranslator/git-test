@@ -1,5 +1,6 @@
-- feature 1
+- feature
 - feature 2
 - feature 4
 - bug fixed
 - improve performance
+- amend test
