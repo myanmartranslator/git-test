@@ -39,7 +39,7 @@ jobs:
         - name: Deploy to GitHub Pages
           uses: peaceiris/actions-gh-pages@v3
           with:
-            personal_token: ${{ secrets.test2 }}   # Ensure this matches your secret's name exactly
+            personal_token: ${{ secrets.dtoken }}   # Ensure this matches your secret's name exactly
             publish_dir: ./public
             publish_branch: gh-pages
             allow_empty_commit: false
